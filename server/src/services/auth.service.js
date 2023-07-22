@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const User = require('../models/user.model');
 
+const SECRET = process.env.JWT_SECRET || 'secret';
+
 const verifyIfExistUser = async (email) => {
     const user = await User.findOne({ email });
     if (user) {
@@ -61,7 +63,7 @@ const login = async (userData) => {
 
     if (!passwordMatch) return { message: 'Senha incorreta' };
 
-    const token = jwt.sign({ id: user._id, username: user.username }, process.env.JWT_SECRET, { expiresIn: '1d' });
+    const token = jwt.sign({ id: user._id, username: user.username }, SECRET, { expiresIn: '1d' });
 
     return { token };
 };
