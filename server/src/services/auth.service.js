@@ -1,5 +1,6 @@
+/* eslint-disable no-underscore-dangle */
 const bcrypt = require('bcryptjs');
-// const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const User = require('../models/user.model');
 
@@ -21,9 +22,9 @@ const verifyIfUserIsAdmin = async (id) => {
     return { admin };
 };
 
-const createUser = async (userData) => {
+const createUser = async (userData, invitedBy) => {
     const {
-        username, password, email, tell, invitedBy, isAdmin,
+        username, email, tell, isAdmin,
     } = userData;
 
     const adminExist = await verifyIfUserIsAdmin(invitedBy);
@@ -31,7 +32,8 @@ const createUser = async (userData) => {
     const userExist = await verifyIfExistUser(email);
     if (userExist.message) return userExist;
 
-    const hash = password ? await bcrypt.hash(password, 10) : await bcrypt.hash('123456', 10);
+    const hash = await bcrypt.hash('123456', 10);
+
     const newUser = await User.create({
         username,
         password: hash,
@@ -40,10 +42,31 @@ const createUser = async (userData) => {
         invitedBy,
         isAdmin,
     });
+
     newUser.password = undefined;
+
     return newUser;
+};
+
+const login = async (userData) => {
+    const { email, password } = userData;
+
+    const userExist = await verifyIfExistUser(email);
+
+    if (userExist.user) return { message: 'Usuário não existe' };
+
+    const user = await User.findOne({ email });
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch) return { message: 'Senha incorreta' };
+
+    const token = jwt.sign({ id: user._id, username: user.username }, process.env.JWT_SECRET, { expiresIn: '1d' });
+
+    return { token };
 };
 
 module.exports = {
     createUser,
+    login,
 };
