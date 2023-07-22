@@ -14,23 +14,11 @@ const verifyIfExistUser = async (email) => {
     return { user };
 };
 
-const verifyIfUserIsAdmin = async (id) => {
-    const admin = await User.findById({ _id: id });
-
-    if (admin && !admin.isAdmin) {
-        return { message: 'Usuário não é admin' };
-    }
-
-    return { admin };
-};
-
 const createUser = async (userData, invitedBy) => {
     const {
         username, email, tell, isAdmin,
     } = userData;
 
-    const adminExist = await verifyIfUserIsAdmin(invitedBy);
-    if (adminExist.message) return adminExist;
     const userExist = await verifyIfExistUser(email);
     if (userExist.message) return userExist;
 
@@ -63,7 +51,7 @@ const login = async (userData) => {
 
     if (!passwordMatch) return { message: 'Senha incorreta' };
 
-    const token = jwt.sign({ id: user._id, username: user.username }, SECRET, { expiresIn: '1d' });
+    const token = jwt.sign({ id: user._id, username: user.username, admin: user.isAdmin }, SECRET, { expiresIn: '1d' });
 
     return { token };
 };
