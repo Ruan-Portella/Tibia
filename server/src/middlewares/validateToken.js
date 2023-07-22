@@ -13,7 +13,7 @@ const validateToken = (req, res, next) => {
 
         const user = jwt.verify(token, SECRET);
 
-        req.user = { id: user.id, name: user.name };
+        req.user = { id: user.id, name: user.name, admin: user.admin };
 
         return next();
     } catch (error) {
