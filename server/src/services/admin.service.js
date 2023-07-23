@@ -57,8 +57,15 @@ const deleteUser = async (id) => {
     return user;
 };
 
+const updateUser = async (id, userData) => {
+    const user = await User.findByIdAndUpdate(id, userData);
+    if (!user) throw new Error('Usuário não encontrado');
+    return user;
+};
+
 module.exports = {
     getAllUsers,
     createUser,
     deleteUser,
+    updateUser,
 };
