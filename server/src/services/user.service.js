@@ -39,9 +39,17 @@ const deleteChar = async (id) => {
     await Char.findByIdAndDelete(id);
 };
 
+const updateUser = async (id, user) => {
+    await getUserById(id);
+    await User.findByIdAndUpdate(id, user);
+    const userUpdated = await User.findById(id);
+    return userUpdated;
+};
+
 module.exports = {
     getUserById,
     createChar,
     updateChar,
     deleteChar,
+    updateUser,
 };
