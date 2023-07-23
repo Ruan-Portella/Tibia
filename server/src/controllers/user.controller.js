@@ -24,7 +24,20 @@ const createChar = async (req, res) => {
     }
 };
 
+const updateChar = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { id: userId } = req.user;
+        if (userId !== id) throw new Error('Você não tem permissão para atualizar um personagem para este usuário');
+        const char = await userService.updateChar(req.body, id);
+        res.status(200).json(char);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 module.exports = {
     getUserById,
     createChar,
+    updateChar,
 };
