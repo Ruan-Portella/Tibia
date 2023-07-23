@@ -3,6 +3,11 @@ require('dotenv').config();
 const User = require('../models/user.model');
 const Char = require('../models/char.model');
 
+const validateIfExistChar = async (id) => {
+    const char = await Char.findById(id);
+    return char;
+};
+
 const getUserById = async (id) => {
     const user = await User.findById(id);
     if (!user) throw new Error('Usuário não encontrado');
@@ -19,7 +24,17 @@ const createChar = async (char, userId) => {
     return newChar;
 };
 
+const updateChar = async (char, userId) => {
+    await getUserById(userId);
+    const charExist = await validateIfExistChar(char.id);
+    if (!charExist) throw new Error('Personagem não encontrado');
+    await Char.findByIdAndUpdate(char.id, char);
+    const updatedChar = await Char.findById(char.id);
+    return updatedChar;
+};
+
 module.exports = {
     getUserById,
     createChar,
+    updateChar,
 };
