@@ -30,6 +30,10 @@ const userSchema = new Schema({
     createdAt: {
         type: String,
     },
+    chars: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Char',
+    }],
 });
 
 const User = mongoose.model('User', userSchema);
