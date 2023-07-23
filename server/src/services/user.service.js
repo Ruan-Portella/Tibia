@@ -33,8 +33,15 @@ const updateChar = async (char, userId) => {
     return updatedChar;
 };
 
+const deleteChar = async (id) => {
+    const charExist = await validateIfExistChar(id);
+    if (!charExist) throw new Error('Personagem não encontrado');
+    await Char.findByIdAndDelete(id);
+};
+
 module.exports = {
     getUserById,
     createChar,
     updateChar,
+    deleteChar,
 };
