@@ -46,11 +46,11 @@ export default function Home() {
       })
       .then((response) => {
         localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user", response.data.name);
+        localStorage.setItem("admin", response.data.admin);
         if (response.data.admin) {
           router.push(`${HOSTNAME}/admin`);
         } else {
-          router.push(`${HOSTNAME}/user`);
+          router.push(`${HOSTNAME}/user/${response.data.id}`);
         }
       })
       .catch((error) => {
@@ -191,7 +191,7 @@ export default function Home() {
                   }).then((response) => {
 
                     localStorage.setItem("token", response.data.token);
-                    localStorage.setItem("user", response.data.name);
+                    localStorage.setItem("admin", response.data.admin);
 
                     if (response.status === 200) {
                       let timerInterval;
@@ -210,7 +210,7 @@ export default function Home() {
                           if (response.data.admin) {
                             router.push(`${HOSTNAME}/admin`);
                           } else {
-                            router.push(`${HOSTNAME}/user`);
+                            router.push(`${HOSTNAME}/user/${response.data.id}`);
                           }
                         }
                       });
