@@ -1,0 +1,95 @@
+.loginContent {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.loginBanner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.loginBanner a {
+    color: white;
+}
+
+.image {
+    width: 90%;
+    height: 90%;
+    object-fit: cover;
+}
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    gap: 20px;
+}
+
+.formTitle {
+    display: flex;
+    width: 65%;
+}
+
+.loginForm form {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
+
+.buttonForm{
+   background-color: #2f3c41;
+   border: none;
+}
+
+.buttonForm:hover {
+    background-color: #110101;
+}
+
+.buttonForm:disabled {
+    background-color: #263238;
+    border: none;
+}
+
+.error {
+    color: red;
+}
+
+.inputPassword {
+    position: relative;
+}
+
+.formPassword {
+    background-image: none !important;
+}
+
+.inputPassword svg {
+    position: absolute;
+    top: 25%;
+    right: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+    .loginContent {
+        flex-direction: column;
+    }
+
+    .loginBanner {
+       display: none;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+
+    .loginForm {
+        gap: 5px;
+    }
+    
+}
