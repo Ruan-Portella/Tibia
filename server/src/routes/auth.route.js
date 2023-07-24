@@ -4,6 +4,7 @@ const validations = require('../middlewares');
 
 const router = express.Router();
 
-router.post('/login', validations.validateEmail, validations.validatePassword, validations.validateName, authController.login);
+router.post('/login', validations.validateEmail, validations.validatePassword, authController.login);
+router.post('/loginWithGoogle', authController.loginWithGoogle);
 
 module.exports = router;
