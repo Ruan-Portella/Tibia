@@ -1,0 +1,70 @@
+@media (max-width: 768px) {
+
+    .table {
+        margin-bottom: 60px;
+    }
+
+    .table thead {
+        display: none;
+    }
+
+    .table td {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .table tr {
+        display: block;
+        margin-bottom: 10px;
+        border-radius: 20px;
+    }
+
+    .table td:first-of-type {
+        font-weight: bold;
+        font-size: 1.2rem;
+        text-align: center;
+        display: block;
+    }
+
+    
+    tbody tr  td:first-of-type {
+        border-radius: 20px 20px 0px 0px;
+    }
+
+    tbody tr td:last-of-type {
+        border-radius: 0px 0px 20px 20px;
+    }
+
+    .table td:not(:first-of-type):before {
+        content: attr(data-title);
+        margin-right: 20px;
+        display: block;
+        font-weight: bold;
+    }
+
+    .trFirst {
+        border-radius: 20px !important;
+    }
+}
+
+@media (max-width: 520px) {
+    .swal2-html-container {
+        margin: 0px 0px !important;
+        font-size: 1rem !important;
+    }
+
+    .swal2-input {
+        margin: 20px 0px 10px 0px;
+    }
+}
+
+@media (max-width: 300px) {
+    .swal2-html-container {
+        margin: 0px 0px !important;
+        font-size: 0.8rem !important;
+    }
+
+    .swal2-input {
+        margin: 20px 0px 10px 0px;
+    }
+}
