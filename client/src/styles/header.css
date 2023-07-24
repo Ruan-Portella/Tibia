@@ -1,16 +1,17 @@
 .navbar {
     background-color: #263238;
-    position: fixed;
     width: 100%;
     z-index: 9999;
     transition:  0.40s ease-in-out;
-    }
+}
     
 .brandLogo {
     font-size: 36px;
     color: white;
     letter-spacing: -0.2rem;
     text-shadow: 0.1em 0.1em 0.030em #333;
+    padding: 0;
+    margin: 0;
 }
 
 .ms-auto {
@@ -113,5 +114,17 @@
         align-items: center;
         gap: 0px;
         margin-right: 0px;
+    }
+}
+
+@media only screen and (max-width: 300px) {
+
+    .navbar {
+        padding: 0;
+    }
+
+    .brandLogo {
+        font-size: 20px;
+        letter-spacing: 0;
     }
 }
