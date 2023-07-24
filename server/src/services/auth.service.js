@@ -11,7 +11,7 @@ const verifyIfExistUser = async (email) => {
     if (user) {
         return { message: 'Usuário já existe' };
     }
-    return { user };
+    return { user: 'Usuário não existe' };
 };
 
 // Obtendo a data atual e formatando para o formato brasileiro:
@@ -21,20 +21,39 @@ const login = async (userData) => {
 
     const userExist = await verifyIfExistUser(email);
 
-    if (userExist.user) return { message: 'Usuário não existe' };
+    if (userExist.user) {
+        throw new Error(userExist.user);
+    }
 
     const user = await User.findOne({ email });
 
     const passwordMatch = await bcrypt.compare(password, user.password);
 
-    if (!passwordMatch) return { message: 'Senha incorreta' };
+    if (!passwordMatch) {
+        throw new Error('Senha incorreta');
+    }
 
-    const token = jwt.sign({ id: user._id, username: user.username, admin: user.isAdmin }, SECRET, { expiresIn: '1d' });
+    const token = jwt.sign({ id: user._id, username: user.username, admin: user.isAdmin }, SECRET, { expiresIn: '30d' });
 
-    return { token };
+    return { token, admin: user.isAdmin };
+};
+
+const loginWithGoogle = async (userData) => {
+    const { email } = userData;
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+        throw new Error('Usuário não existe');
+    }
+
+    const token = jwt.sign({ id: user._id, username: user.username, admin: user.isAdmin }, SECRET, { expiresIn: '30d' });
+
+    return { token, admin: user.isAdmin };
 };
 
 module.exports = {
     login,
     verifyIfExistUser,
+    loginWithGoogle,
 };
