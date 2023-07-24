@@ -61,7 +61,7 @@ export default function Header() {
                           return false;
                         }}
                       >
-                        Profile
+                        Perfil
                       </Nav.Link>
                     </Nav>
                   </Navbar.Collapse>
