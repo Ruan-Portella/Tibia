@@ -7,6 +7,10 @@
    margin: 20px 130px 20px 130px
 }
 
+.char a {
+    color: blue;
+}
+
 
 .dashBoardRow {
     margin: 10px 50px 0px 50px
