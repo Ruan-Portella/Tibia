@@ -222,7 +222,7 @@ export default function Home() {
                     }
                   })
                     .catch((error) => {
-                      setError(error.response.data.error)   
+                      setError(error.response.data.error);   
                     });
                 }}
                 onError={() => {

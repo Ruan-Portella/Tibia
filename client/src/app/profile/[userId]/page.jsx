@@ -48,16 +48,16 @@ export default function Profile() {
           nome: res.data.username,
           email: res.data.email,
           tell: res.data.tell,
-        })
+        });
       })
         .catch((err) => {
           if (err.response.status === 401 || err.response.status === 500) {
             router.push('/');
           }
         });
-    }
+    };
     getUserInfo();
-  }, [])
+  }, []);
 
   const handleChange = (data) => {
     setSignUpData({
@@ -86,12 +86,12 @@ export default function Profile() {
           email: signUpData.email,
           tell: signUpData.tell,
           username: signUpData.nome,
-        }
+        };
     
         signUpData.newPassword ? data = {
           ...data,
           password: signUpData.password,
-        } : data
+        } : data;
     
     
         await axios
@@ -106,11 +106,11 @@ export default function Profile() {
                 icon: 'success',
                 title: 'Sucesso!',
                 text: 'Perfil atualizado com sucesso!',
-              })
+              });
             }
           })
           .catch((error) => {
-             if (error.response.data.message === "Token inválido") {
+            if (error.response.data.message === "Token inválido") {
               router.push('/');
             }
             else {
@@ -125,10 +125,10 @@ export default function Profile() {
           'Cancelado',
           'Suas informações não foram alteradas',
           'error'
-        )
+        );
       }
       setLoading(false);
-    })
+    });
 
   };
 

@@ -33,8 +33,8 @@ export default function DashBoard() {
         },
       })
         .then((res) => {
-            setUserChars(res.data.chars);
-            setFilteredUsersChars(res.data.chars);
+          setUserChars(res.data.chars);
+          setFilteredUsersChars(res.data.chars);
         })
         .catch((err) => {
           if (err.response.status === 401 || err.response.status === 500) {
@@ -206,7 +206,7 @@ export default function DashBoard() {
         newCharName.value = charName;
         newIsPrincipal.value = isPrincipal;
         newLevel.value = level;
-        newVocations.value = vocation
+        newVocations.value = vocation;
       },
     })
       .then(async (result) => {
@@ -219,11 +219,11 @@ export default function DashBoard() {
         if (result.isConfirmed) {
           if (newCharName && newIsPrincipal && newLevel && newVocations) {
             await axios.put(`${PROTOCOL}://${HOST}/api/user/${params.userId}`, {
-                id,
-                charName: newCharName.value,
-                level: newLevel.value,
-                vocation: newVocations.value,
-                isPrincipal: newIsPrincipal.value,
+              id,
+              charName: newCharName.value,
+              level: newLevel.value,
+              vocation: newVocations.value,
+              isPrincipal: newIsPrincipal.value,
             }, {
               headers: {
                 'Authorization': `Bearer ${token}`,
@@ -234,10 +234,10 @@ export default function DashBoard() {
 
                   usersChars.filter((char) => {
                     if (char._id === id) {
-                        char.charName = newCharName.value;
-                        char.level = newLevel.value;
-                        char.vocation = newVocations.value;
-                        char.isPrincipal = newIsPrincipal.value;
+                      char.charName = newCharName.value;
+                      char.level = newLevel.value;
+                      char.vocation = newVocations.value;
+                      char.isPrincipal = newIsPrincipal.value;
                     }
                   });
 
@@ -275,87 +275,87 @@ export default function DashBoard() {
   const filterChars = (value) => {
     const filteredUsesChar = usersChars.filter((chars) => chars.charName
       .toLowerCase().includes(value.toLowerCase()));
-      setFilteredUsersChars(filteredUsesChar);
+    setFilteredUsersChars(filteredUsesChar);
   };
 
   return (
     <>
-    <Header />
-    <main>
-      <Container fluid className={styles.container}>
-        <Row className={styles.userInput}>
-          <Col className={styles.inputGroup}>
-            <InputGroup size="sm" className={styles.input} >
-              <Form.Control
-                onChange={(e) => filterChars(e.target.value)}
-                className={styles.formControl}
-                placeholder="Filtrar por Nome"
-                aria-label="Filter"
-                aria-describedby="basic-addon1"
-              />
-            </InputGroup>
-          </Col>
-          <Col className={styles.button}>
-            <Button variant="primary" type="submit" onClick={() => createChar()}>
-              <IoMdAdd size={20} /> Adicionar Personagem
-            </Button>
-          </Col>
-        </Row>
-        {
-          filteredUsesChars.length === 0 && (
-            <Row className={styles.notCharRow}>
-              <h2 className={styles.notChar}>
+      <Header />
+      <main>
+        <Container fluid className={styles.container}>
+          <Row className={styles.userInput}>
+            <Col className={styles.inputGroup}>
+              <InputGroup size="sm" className={styles.input} >
+                <Form.Control
+                  onChange={(e) => filterChars(e.target.value)}
+                  className={styles.formControl}
+                  placeholder="Filtrar por Nome"
+                  aria-label="Filter"
+                  aria-describedby="basic-addon1"
+                />
+              </InputGroup>
+            </Col>
+            <Col className={styles.button}>
+              <Button variant="primary" type="submit" onClick={() => createChar()}>
+                <IoMdAdd size={20} /> Adicionar Personagem
+              </Button>
+            </Col>
+          </Row>
+          {
+            filteredUsesChars.length === 0 && (
+              <Row className={styles.notCharRow}>
+                <h2 className={styles.notChar}>
                 Nenhum personagem salvo
-              </h2>
-            </Row>
-          )
-        }
-        <Row className={styles.dashBoardRow}>
-          <Col className={styles.dashBoardCol}>
-            <div className={styles.dashBoardTable}>
-              {
-                filteredUsesChars.length >= 1 && (
-                  <Table striped bordered hover>
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Nome</th>
-                        <th>Principal</th>
-                        <th>Level</th>
-                        <th>Vocação</th>
-                        <th>Operações</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {
-                        filteredUsesChars.map((chars, index) => {
-                          return (
-                            <tr key={chars._id} className={filteredUsesChars.length > 1 ? '' : 'trFirst'}>
-                              <td data-title='#'>{index + 1}</td>
-                              <td data-title='Nome'>{chars.charName}</td>
-                              <td data-title='Principal'>{`${chars.isPrincipal}`}</td>
-                              <td data-title='Level'>{chars.level}</td>
-                              <td data-title='Vocação'>{chars.vocation}</td>
-                              <td data-title='Operações' >
-                                <div className={styles.thOperations}>
-                                  <BiEdit size={27} className={styles.editBtn} onClick={() => updateChar(chars._id, chars.charName, chars.isPrincipal, chars.level, chars.vocation)} />
+                </h2>
+              </Row>
+            )
+          }
+          <Row className={styles.dashBoardRow}>
+            <Col className={styles.dashBoardCol}>
+              <div className={styles.dashBoardTable}>
+                {
+                  filteredUsesChars.length >= 1 && (
+                    <Table striped bordered hover>
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Nome</th>
+                          <th>Principal</th>
+                          <th>Level</th>
+                          <th>Vocação</th>
+                          <th>Operações</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {
+                          filteredUsesChars.map((chars, index) => {
+                            return (
+                              <tr key={chars._id} className={filteredUsesChars.length > 1 ? '' : 'trFirst'}>
+                                <td data-title='#'>{index + 1}</td>
+                                <td data-title='Nome'>{chars.charName}</td>
+                                <td data-title='Principal'>{`${chars.isPrincipal}`}</td>
+                                <td data-title='Level'>{chars.level}</td>
+                                <td data-title='Vocação'>{chars.vocation}</td>
+                                <td data-title='Operações' >
+                                  <div className={styles.thOperations}>
+                                    <BiEdit size={27} className={styles.editBtn} onClick={() => updateChar(chars._id, chars.charName, chars.isPrincipal, chars.level, chars.vocation)} />
                               |
-                                  <BiTrashAlt size={27} className={styles.deleteBtn} onClick={() => deleteChar(chars._id)} />
-                                </div>
-                              </td>
-                            </tr>
-                          );
-                        })
-                      }
-                    </tbody>
-                  </Table>
-                )
-              }
-            </div>
-          </Col>
-        </Row>
-      </Container>
-    </main>
+                                    <BiTrashAlt size={27} className={styles.deleteBtn} onClick={() => deleteChar(chars._id)} />
+                                  </div>
+                                </td>
+                              </tr>
+                            );
+                          })
+                        }
+                      </tbody>
+                    </Table>
+                  )
+                }
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </main>
     </>
   );
 }

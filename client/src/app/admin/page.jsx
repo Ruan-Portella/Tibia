@@ -34,8 +34,8 @@ export default function DashBoard() {
         },
       })
         .then((res) => {
-            setUsers(res.data);
-            setFilteredUsers(res.data);
+          setUsers(res.data);
+          setFilteredUsers(res.data);
         })
         .catch((err) => {
           if (err.response.status === 401 || err.response.status === 500) {
@@ -202,7 +202,7 @@ export default function DashBoard() {
         const newIsAdmin = document.getElementById('isAdmin');
         newUserName.value = userName;
         newTell.value = tell;
-        newIsAdmin.value = isAdmin
+        newIsAdmin.value = isAdmin;
       },
     })
       .then(async (result) => {
@@ -214,10 +214,10 @@ export default function DashBoard() {
         if (result.isConfirmed) {
           if (newUserName && newTell && newIsAdmin) {
             await axios.put(`${PROTOCOL}://${HOST}/api/admin`, {
-                userId: id,
-                username: newUserName.value,
-                tell: newTell.value,
-                isAdmin: newIsAdmin.value,
+              userId: id,
+              username: newUserName.value,
+              tell: newTell.value,
+              isAdmin: newIsAdmin.value,
             }, {
               headers: {
                 'Authorization': `Bearer ${token}`,
@@ -228,9 +228,9 @@ export default function DashBoard() {
 
                   users.filter((user) => {
                     if (user._id === id) {
-                        user.username = newUserName.value;
-                        user.tell = newTell.value;
-                        user.isAdmin = newIsAdmin.value;
+                      user.username = newUserName.value;
+                      user.tell = newTell.value;
+                      user.isAdmin = newIsAdmin.value;
                     }
                   });
 
@@ -267,82 +267,82 @@ export default function DashBoard() {
   const filterUsers = (value) => {
     const filterUsers = users.filter((user) => user.username
       .toLowerCase().includes(value.toLowerCase()));
-      setFilteredUsers(filterUsers);
+    setFilteredUsers(filterUsers);
   };
 
   return (
     <>
-    <Header />
-    <main>
-      <Container fluid className={styles.container}>
-        <Row className={styles.userInput}>
-          <Col className={styles.inputGroup}>
-            <InputGroup size="sm" className={styles.input} >
-              <Form.Control
-                onChange={(e) => filterUsers(e.target.value)}
-                className={styles.formControl}
-                placeholder="Filtrar por Nome"
-                aria-label="Filter"
-                aria-describedby="basic-addon1"
-              />
-            </InputGroup>
-          </Col>
-          <Col className={styles.button}>
-            <Button variant="primary" type="submit" onClick={() => createUser ()}>
-              <IoMdAdd size={20} /> Adicionar Usuário
-            </Button>
-          </Col>
-        </Row>
-        <Row className={styles.dashBoardRow}>
-          <Col className={styles.dashBoardCol}>
-            <div className={styles.dashBoardTable}>
-              {
-                filteredUsers.length >= 1 && (
-                  <Table striped bordered hover>
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Nome</th>
-                        <th>Telefone</th>
-                        <th>Personagens</th>
-                        <th>Data de Entrada</th>
-                        <th>Invitado Por</th>
-                        <th>Admin</th>
-                        <th>Operações</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {
-                        filteredUsers.map((user, index) => {
-                          return (
-                            <tr key={user._id} className={filteredUsers.length > 1 ? '' : 'trFirst'}>
-                              <td data-title='#'>{index + 1}</td>
-                              <td data-title='Nome'>{user.username}</td>
-                              <td data-title='Telefone'>{`${user.tell}`}</td>
-                              <td data-title='Personagens' className={styles.char} ><Link href={`${HOSTNAME}/user/${user._id}`}>Personagens</Link></td>
-                              <td data-title='Data de Entrada'>{user.createdAt}</td>
-                              <td data-title='Invitado Por'>{user.invitedBy}</td>
-                              <td data-title='Admin'>{`${user.isAdmin}`}</td>
-                              <td data-title='Operações' >
-                                <div className={styles.thOperations}>
-                                  <BiEdit size={27} className={styles.editBtn} onClick={() => updateChar(user._id, user.username, user.tell, user.isAdmin)} />
+      <Header />
+      <main>
+        <Container fluid className={styles.container}>
+          <Row className={styles.userInput}>
+            <Col className={styles.inputGroup}>
+              <InputGroup size="sm" className={styles.input} >
+                <Form.Control
+                  onChange={(e) => filterUsers(e.target.value)}
+                  className={styles.formControl}
+                  placeholder="Filtrar por Nome"
+                  aria-label="Filter"
+                  aria-describedby="basic-addon1"
+                />
+              </InputGroup>
+            </Col>
+            <Col className={styles.button}>
+              <Button variant="primary" type="submit" onClick={() => createUser ()}>
+                <IoMdAdd size={20} /> Adicionar Usuário
+              </Button>
+            </Col>
+          </Row>
+          <Row className={styles.dashBoardRow}>
+            <Col className={styles.dashBoardCol}>
+              <div className={styles.dashBoardTable}>
+                {
+                  filteredUsers.length >= 1 && (
+                    <Table striped bordered hover>
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Nome</th>
+                          <th>Telefone</th>
+                          <th>Personagens</th>
+                          <th>Data de Entrada</th>
+                          <th>Invitado Por</th>
+                          <th>Admin</th>
+                          <th>Operações</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {
+                          filteredUsers.map((user, index) => {
+                            return (
+                              <tr key={user._id} className={filteredUsers.length > 1 ? '' : 'trFirst'}>
+                                <td data-title='#'>{index + 1}</td>
+                                <td data-title='Nome'>{user.username}</td>
+                                <td data-title='Telefone'>{`${user.tell}`}</td>
+                                <td data-title='Personagens' className={styles.char} ><Link href={`${HOSTNAME}/user/${user._id}`}>Personagens</Link></td>
+                                <td data-title='Data de Entrada'>{user.createdAt}</td>
+                                <td data-title='Invitado Por'>{user.invitedBy}</td>
+                                <td data-title='Admin'>{`${user.isAdmin}`}</td>
+                                <td data-title='Operações' >
+                                  <div className={styles.thOperations}>
+                                    <BiEdit size={27} className={styles.editBtn} onClick={() => updateChar(user._id, user.username, user.tell, user.isAdmin)} />
                               |
-                                  <BiTrashAlt size={27} className={styles.deleteBtn} onClick={() => deleteUser(user._id)} />
-                                </div>
-                              </td>
-                            </tr>
-                          );
-                        })
-                      }
-                    </tbody>
-                  </Table>
-                )
-              }
-            </div>
-          </Col>
-        </Row>
-      </Container>
-    </main>
+                                    <BiTrashAlt size={27} className={styles.deleteBtn} onClick={() => deleteUser(user._id)} />
+                                  </div>
+                                </td>
+                              </tr>
+                            );
+                          })
+                        }
+                      </tbody>
+                    </Table>
+                  )
+                }
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </main>
     </>
   );
 }
