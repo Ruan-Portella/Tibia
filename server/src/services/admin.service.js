@@ -15,15 +15,25 @@ function formatDateBrazilian(date) {
 const getAllUsers = async () => {
     const users = await User.find();
     if (!users) throw new Error('Não existem usuários cadastrados');
-    users.forEach(async (user) => {
+
+    const getUsers = users.map(async (user) => {
         const userInfo = user;
         userInfo.password = undefined;
         userInfo.email = undefined;
         userInfo.__v = undefined;
 
+        if (userInfo.isAdmin) {
+            userInfo.invitedBy = 'Admin';
+            return userInfo;
+        }
+
+        const invitedBy = await User.findById(userInfo.invitedBy);
+        userInfo.invitedBy = invitedBy.username;
+
         return userInfo;
     });
-    return users;
+
+    return Promise.all(getUsers);
 };
 
 const createUser = async (userData, invitedBy) => {
