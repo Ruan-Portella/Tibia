@@ -20,7 +20,7 @@ const userSchema = new Schema({
         required: true,
     },
     invitedBy: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: 'User',
     },
     isAdmin: {
