@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 require('dotenv').config();
+const bcrypt = require('bcryptjs');
 const User = require('../models/user.model');
 const Char = require('../models/char.model');
 
@@ -14,7 +15,6 @@ const getUserById = async (id) => {
     const chars = await Char.find({ userId: id });
     user.chars = chars;
     user.password = undefined;
-    user.email = undefined;
     return user;
 };
 
@@ -41,6 +41,10 @@ const deleteChar = async (id) => {
 
 const updateUser = async (id, user) => {
     await getUserById(id);
+    if (user.password) {
+        const newPassword = user;
+        newPassword.password = await bcrypt.hash(user.password, 10);
+    }
     await User.findByIdAndUpdate(id, user);
     const userUpdated = await User.findById(id);
     return userUpdated;
