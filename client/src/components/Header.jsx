@@ -15,20 +15,25 @@ export default function Header() {
     useEffect(() => {
         const token = localStorage.getItem('token');
         const admin = localStorage.getItem('admin');
+        const userId = localStorage.getItem('userId');
         if (!token) {
             route.push('/');
         }
         if (admin === 'true') {
             setPathUser('admin')
         }
-        setUserId(params.userId)
+        if (params.userId) {
+          setUserId(params.userId)
+        } else {
+          setUserId(userId)
+        }
     }, []);
 
     return (
     <header>
     <Navbar collapseOnSelect expand="lg">
       <Container>
-        <Navbar.Brand href={`/${pathUser}/${userId}`}>
+        <Navbar.Brand href={pathUser === 'user' ? `/${pathUser}/${userId}` : `/${pathUser}`}>
           <p className="brandLogo">Brazilian Squad</p>
         </Navbar.Brand>
               <Navbar.Toggle aria-controls="basic-navbar-nav" className={isToggler ? 'hamburger-x' : ''} onClick={() => isToggler ? setIsToggler(false) : setIsToggler(true)}>
@@ -43,7 +48,7 @@ export default function Header() {
                   <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto">
                       <Nav.Link
-                         href={`/${pathUser}/${userId}`}
+                         href={pathUser === 'user' ? `/${pathUser}/${userId}` : `/${pathUser}`}
                         className={activeLink === 'home' ? 'active navbar-link' : 'navbar-link'}
                         onClick={() => {
                           setActiveLink('home');
@@ -54,6 +59,7 @@ export default function Header() {
                         Inicio
                       </Nav.Link>
                       <Nav.Link
+                        href={`/profile/${userId}`}
                         className={activeLink === 'profile' ? 'active navbar-link' : 'navbar-link'}
                         onClick={() => {
                           setActiveLink('profile');
@@ -62,6 +68,19 @@ export default function Header() {
                         }}
                       >
                         Perfil
+                      </Nav.Link>
+                      <Nav.Link
+                        href={`/`}
+                        className={'navbar-link'}
+                        onClick={() => {
+                          localStorage.removeItem('token');
+                          localStorage.removeItem('userId');
+                          localStorage.removeItem('admin');
+                          localStorage.removeItem('userName');
+                          route.push('/');
+                        }}
+                      >
+                        Logout
                       </Nav.Link>
                     </Nav>
                   </Navbar.Collapse>
