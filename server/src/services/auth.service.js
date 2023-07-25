@@ -33,7 +33,7 @@ const login = async (userData) => {
         throw new Error('Senha incorreta');
     }
 
-    const token = jwt.sign({ id: user._id, username: user.username, admin: user.isAdmin }, SECRET, { expiresIn: '30d' });
+    const token = jwt.sign({ id: user._id, username: user.username, admin: user.isAdmin }, SECRET, { expiresIn: '4h' });
 
     return {
         token, admin: user.isAdmin, id: user._id, name: user.username,
@@ -49,7 +49,7 @@ const loginWithGoogle = async (userData) => {
         throw new Error('Usuário não existe');
     }
 
-    const token = jwt.sign({ id: user._id, username: user.username, admin: user.isAdmin }, SECRET, { expiresIn: '30d' });
+    const token = jwt.sign({ id: user._id, username: user.username, admin: user.isAdmin }, SECRET, { expiresIn: '4h' });
 
     return {
         token, admin: user.isAdmin, id: user._id, name: user.username,
