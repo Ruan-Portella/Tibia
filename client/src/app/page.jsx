@@ -47,6 +47,9 @@ export default function Home() {
       .then((response) => {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("admin", response.data.admin);
+        localStorage.setItem("userName", response.data.name);
+        localStorage.setItem("userId", response.data.id);
+
         if (response.data.admin) {
           router.push(`${HOSTNAME}/admin`);
         } else {
@@ -192,6 +195,8 @@ export default function Home() {
 
                     localStorage.setItem("token", response.data.token);
                     localStorage.setItem("admin", response.data.admin);
+                    localStorage.setItem("userName", response.data.name);
+                    localStorage.setItem("userId", response.data.id);
 
                     if (response.status === 200) {
                       let timerInterval;
