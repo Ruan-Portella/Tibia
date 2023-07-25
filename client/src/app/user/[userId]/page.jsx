@@ -37,7 +37,7 @@ export default function DashBoard() {
             setFilteredUsersChars(res.data.chars);
         })
         .catch((err) => {
-          if (err.response.status === 401) {
+          if (err.response.status === 401 || err.response.status === 500) {
             router.push('/');
           }
         });
@@ -78,7 +78,11 @@ export default function DashBoard() {
                 setFilteredUsersChars([]);
               }
             }).catch((err) => {
-              console.log(err);
+              Swal.fire(
+                'Deletado!',
+                `O Personagem não foi deletado: ${err.response.data.message}`,
+                'error'
+              );
             });
 
           Swal.fire(
@@ -140,6 +144,7 @@ export default function DashBoard() {
               .then((res) => {
                 if (res.status === 201) {
                   const newChar = {
+                    _id: res.data._id,
                     charName: charName.value,
                     level: level.value,
                     vocation: vocation.value,
@@ -161,7 +166,8 @@ export default function DashBoard() {
                   `O Personagem não foi criado: ${err.response.data.message}`,
                   'error'
                 );
-              }
+              },
+              router.push('/')
               );
           }
           else {
@@ -252,7 +258,8 @@ export default function DashBoard() {
                   `O Personagem não foi editado: ${err.response.data.message}`,
                   'error'
                 );
-              }
+              },
+              router.push('/')
               );
           }
         } else if (!result.isDismissed) {
