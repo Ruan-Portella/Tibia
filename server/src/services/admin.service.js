@@ -23,7 +23,7 @@ const getAllUsers = async () => {
         userInfo.__v = undefined;
 
         if (userInfo.isAdmin) {
-            userInfo.invitedBy = 'Admin';
+            userInfo.invitedBy = 'Usuário é Admin';
             return userInfo;
         }
 
@@ -42,7 +42,7 @@ const createUser = async (userData, invitedBy) => {
     } = userData;
 
     const userExist = await authService.verifyIfExistUser(email);
-    if (userExist.message) return userExist;
+    if (userExist.message) throw new Error(userExist.message);
 
     const hash = await bcrypt.hash('123456', 10);
 
