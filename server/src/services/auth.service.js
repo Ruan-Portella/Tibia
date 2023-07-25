@@ -35,7 +35,9 @@ const login = async (userData) => {
 
     const token = jwt.sign({ id: user._id, username: user.username, admin: user.isAdmin }, SECRET, { expiresIn: '30d' });
 
-    return { token, admin: user.isAdmin, id: user._id };
+    return {
+        token, admin: user.isAdmin, id: user._id, name: user.username,
+    };
 };
 
 const loginWithGoogle = async (userData) => {
@@ -49,7 +51,9 @@ const loginWithGoogle = async (userData) => {
 
     const token = jwt.sign({ id: user._id, username: user.username, admin: user.isAdmin }, SECRET, { expiresIn: '30d' });
 
-    return { token, admin: user.isAdmin, id: user._id };
+    return {
+        token, admin: user.isAdmin, id: user._id, name: user.username,
+    };
 };
 
 module.exports = {
